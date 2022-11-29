@@ -9,7 +9,7 @@ import CreateNew from "./pages/admin/createNew/CreateNew";
 
 function App() {
   const [count, setCount] = useState();
-  const getUrl = "http://localhost:3000/api/nimones-all-data";
+  const getUrl = "http://localhost:3000/api/nimones";
   useEffect(() => {
     axios.get(getUrl + ``).then((res) => setCount(res.data));
   }, []);

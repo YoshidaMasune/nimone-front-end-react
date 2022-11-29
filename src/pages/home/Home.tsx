@@ -30,11 +30,11 @@ type RespType = {
 function Home({ }: Props) {
 
    const [ResPonseApi, setResPonseApi] = useState<Array<RespType>>()
-   const apiUrl = `http://localhost:3000/`;
+   const apiUrl = `http://localhost:3000/api/nimones`;
    const FnameRef:any= useRef()
    const LnameRef: any = useRef();
    useEffect(() => {
-      axios.get(apiUrl + `api/nimones-all-data`).then(res => setResPonseApi(res.data)).catch( err => console.log(err))
+      axios.get(apiUrl + ``).then(res => setResPonseApi(res.data)).catch( err => console.log(err))
    }, [])
 
    const getData = (e: any) => {

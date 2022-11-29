@@ -8,6 +8,11 @@ function CreateNew({}: Props) {
 
   const insertAPI = (e:any) => {
     e.preventDefault()
+    // e.target.time.value = '1669730603239'
+    const valueDate = new Date(`Sat Nov 08 2022 17:30:00`);
+
+    console.log(valueDate)
+
 
     // axios({
     //   method: "post",
@@ -54,7 +59,10 @@ function CreateNew({}: Props) {
 
         <FormControl>
           <label>วันที่</label>
-          <input name='date' type="date" placeholder='วันที่' />
+          <input type="number" min={1} max={31} placeholder='วันที่' />
+          <select name="month" id="">
+            <option value="jen">มกราคม</option>
+          </select>
         </FormControl>
 
         <FormControl>
