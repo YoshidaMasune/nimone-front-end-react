@@ -17,6 +17,7 @@ function Navbar({}: Props) {
             <Menu>
                <li><a href="/">หน้าเเรก</a></li>
                <li><a href="/admin">เจ้าหน้าที่</a></li>
+               <li><a href="/admin/new">create</a></li>
             </Menu>
          </div>
       </NavbarCon>

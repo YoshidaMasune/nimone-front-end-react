@@ -5,6 +5,7 @@ import { Routes, Route } from 'react-router-dom'
 import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import Admin from "./pages/admin/Admin";
+import CreateNew from "./pages/admin/createNew/CreateNew";
 
 function App() {
   const [count, setCount] = useState();
@@ -22,8 +23,9 @@ function App() {
         <Route path="/">
           <Route path="" element={<Home />} />
         </Route>
-        <Route path="/admin">
+        <Route path="/admin/">
           <Route path="" element={<Admin />} />
+          <Route path="new" element={<CreateNew /> } />
         </Route>
       </Routes>
     </div>

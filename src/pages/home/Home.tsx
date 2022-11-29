@@ -32,16 +32,23 @@ function Home({ }: Props) {
    const [ResPonseApi, setResPonseApi] = useState<Array<RespType>>()
    const apiUrl = `http://localhost:3000/`;
    const FnameRef:any= useRef()
-
+   const LnameRef: any = useRef();
    useEffect(() => {
-      axios.get(apiUrl + `api/nimones-all-data`).then(res => setResPonseApi(res.data));
+      axios.get(apiUrl + `api/nimones-all-data`).then(res => setResPonseApi(res.data)).catch( err => console.log(err))
    }, [])
 
    const getData = (e: any) => {
       e.preventDefault();
+      const firstName = FnameRef.current.value;
+      const lastName = LnameRef.current.value;
 
-      const firstName = FnameRef.current.value
-      axios.get(apiUrl + `api/nimones-all-data?firstName=${firstName}`).then(res => setResPonseApi(res.data))
+      if (firstName === "" && lastName === ""){
+         axios.get(apiUrl + `api/nimones-all-data?`).then(res => setResPonseApi(res.data));
+      }else if (firstName !== "" && lastName === "") {
+         axios.get(apiUrl + `api/nimones-all-data?firstName=${firstName}`).then(res => setResPonseApi(res.data));
+      }else if (lastName !== "" && firstName === ""){
+         axios.get(apiUrl + `api/nimones-all-data?lastName=${lastName}`).then(res => setResPonseApi(res.data));
+      }
    }
    return (
       <div>
@@ -53,7 +60,7 @@ function Home({ }: Props) {
                </div>
                <div>
                   <label>สกุล</label>
-                  <input type="text" placeholder='สกุล' />
+                  <input ref={LnameRef} type="text" placeholder='สกุล' />
                </div>
 
                <div>
@@ -67,6 +74,9 @@ function Home({ }: Props) {
                !ResPonseApi? null: ResPonseApi.map((item, idx) => {
                   return <div key={idx}>
                      <p>{item.user.firstName}</p>
+                     <p>{item.user.lastName}</p>
+
+                     <br />
                   </div>
                })
             }
