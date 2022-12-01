@@ -1,7 +1,7 @@
 import Styled from "styled-components";
 
 export const FormCreate = Styled.form`
-
+   
 `;
 
 export const FormControl = Styled.div`
@@ -12,11 +12,13 @@ export const FormControl = Styled.div`
    border: 1px solid #00f0f0;
    width: max-content;
    border-radius: 10px;
+
 `;
 
 export const FormRow = Styled.div`
    display: flex;
    gap: 2rem;
+   flex-wrap: wrap;
 `;
 
 export const Container = Styled.div`

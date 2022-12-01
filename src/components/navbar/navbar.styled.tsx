@@ -5,6 +5,7 @@ export const NavbarCon = Styled.nav`
    align-items: center;
    justify-content: space-between;
    padding: 20px 2rem;
+   background-color: #F7A4A4;
 `
 
 export const Menu = Styled.ul`
