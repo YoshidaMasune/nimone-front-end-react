@@ -50,11 +50,35 @@ const gennerateMonthTh = (days: number) => {
   ];
 };
 
+function populateMonth (days:number) {
+  
+}
+
+function populateDay (month:string):number {
+  const month31 = [ "Jan", "Mar", "May", "Jul", "Aug", "Oct", "Dec" ];
+  const month30 = [ "Apr", "Jun", "Sep", "Nov" ];
+
+  let days:number;
+
+  if (month31.includes(month)) {
+    days = 31
+  }else if (month30.includes(month)){
+    days = 30
+  }else {
+    days = 28;
+  }
+
+
+  return days;
+}
+
 function CreateNew({}: Props) {
   const insertAPI = (e: any) => {
     e.preventDefault();
     // e.target.time.value = '1669730603239'
     const valueDate = new Date(`Sat Nov 08 2022 17:30:00`);
+
+    const monthDay
 
     console.log(valueDate);
 

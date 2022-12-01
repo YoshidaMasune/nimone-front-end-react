@@ -7,9 +7,11 @@ import Navbar from "./components/navbar/Navbar";
 import Admin from "./pages/admin/Admin";
 import CreateNew from "./pages/admin/createNew/CreateNew";
 
+export const API = `http://185.78.167.199:3000`
+
 function App() {
   const [count, setCount] = useState();
-  const getUrl = "http://localhost:3000/api/nimones";
+  const getUrl = `${API}/api/nimones-all-data`;
   useEffect(() => {
     axios.get(getUrl + ``).then((res) => setCount(res.data));
   }, []);

@@ -27,10 +27,12 @@ type RespType = {
    workType: string
 }
 
+import { API } from '../../App'
+
 function Home({ }: Props) {
 
    const [ResPonseApi, setResPonseApi] = useState<Array<RespType>>()
-   const apiUrl = `http://localhost:3000/api/nimones`;
+   const apiUrl = `${API}/api/nimones-all-data`;
    const FnameRef:any= useRef()
    const LnameRef: any = useRef();
    useEffect(() => {
@@ -43,11 +45,11 @@ function Home({ }: Props) {
       const lastName = LnameRef.current.value;
 
       if (firstName === "" && lastName === ""){
-         axios.get(apiUrl + `api/nimones-all-data?`).then(res => setResPonseApi(res.data));
+         axios.get(API + `/api/nimones-all-data?`).then(res => setResPonseApi(res.data));
       }else if (firstName !== "" && lastName === "") {
-         axios.get(apiUrl + `api/nimones-all-data?firstName=${firstName}`).then(res => setResPonseApi(res.data));
+         axios.get(API + `/api/nimones-all-data?firstName=${firstName}`).then(res => setResPonseApi(res.data));
       }else if (lastName !== "" && firstName === ""){
-         axios.get(apiUrl + `api/nimones-all-data?lastName=${lastName}`).then(res => setResPonseApi(res.data));
+         axios.get(API + `/api/nimones-all-data?lastName=${lastName}`).then(res => setResPonseApi(res.data));
       }
    }
    return (
