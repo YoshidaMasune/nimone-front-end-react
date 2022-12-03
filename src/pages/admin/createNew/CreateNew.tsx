@@ -1,5 +1,11 @@
 import React, { ReactElement, useRef, useState } from "react";
-import { FormControl, FormCreate, FormRow, Container } from "./create.styled";
+import {
+  FormControl,
+  FormCreate,
+  FormRow,
+  Container,
+  FormLocation,
+} from "./create.styled";
 import axios from "axios";
 import { API } from "../../../App";
 
@@ -22,20 +28,6 @@ const months_th = [
   "ตุลาคม",
   "พฤศจิกายน",
   "ธันวาคม",
-];
-const months_th_mini = [
-  "ม.ค.",
-  "ก.พ.",
-  "มี.ค.",
-  "เม.ย.",
-  "พ.ค.",
-  "มิ.ย.",
-  "ก.ค.",
-  "ส.ค.",
-  "ก.ย.",
-  "ต.ค.",
-  "พ.ย.",
-  "ธ.ค.",
 ];
 
 const month = [
@@ -62,9 +54,13 @@ function populateMonth(): Array<MonthPopu> {
   });
 }
 
+// ============  main ============
+
 function CreateNew({}: Props) {
   const dateRef: any = useRef();
   const monthRef: any = useRef();
+  const locationRef: any = useRef();
+  const [locationToggle, setLocationToggle] = useState(false);
 
   const MonthEvent = () => {
     let monthsec = monthRef.current;
@@ -86,7 +82,7 @@ function CreateNew({}: Props) {
     const time = e.target.time.value;
     const target = e.target;
     const valueDate = new Date(
-      `${monthRef.current.value} ${date} 2022 ${time}:00`
+      `${monthRef.current.value} ${date} ${target.year.value} ${time}:00`
     );
 
     axios({
@@ -95,7 +91,7 @@ function CreateNew({}: Props) {
       data: {
         userData: {
           firstName: target.firstName.value,
-          lastname: target.lastName.value,
+          lastName: target.lastName.value,
           tell: target.tell.value,
         },
         addressData: {},
@@ -107,9 +103,19 @@ function CreateNew({}: Props) {
           location: target.location.value,
         },
       },
-    })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    }).catch((err) => console.log(err));
+  };
+
+  const displayLocation = (e: any) => {
+    if (e.target.value === "ข้างนอก") {
+      locationRef.current.style = `
+        display: block;
+      `;
+    } else {
+      locationRef.current.style = `
+        display: none;
+      `;
+    }
   };
 
   return (
@@ -119,16 +125,33 @@ function CreateNew({}: Props) {
           <FormRow>
             <FormControl>
               <label>ชื่อ</label>
-              <input name="firstName" type="text" placeholder="ชื่อ" />
+              <input
+                required
+                name="firstName"
+                type="text"
+                placeholder="ชื่อ"
+                autoComplete="none"
+              />
             </FormControl>
             <FormControl>
               <label>สกุล</label>
-              <input name="lastName" type="text" placeholder="สกุล" />
+              <input
+                name="lastName"
+                type="text"
+                placeholder="สกุล"
+                autoComplete="none"
+              />
             </FormControl>
 
             <FormControl>
               <label>ติดต่อ</label>
-              <input name="tell" type="text" placeholder="เบอร์" />
+              <input
+                required
+                name="tell"
+                type="text"
+                placeholder="เบอร์"
+                autoComplete="none"
+              />
             </FormControl>
 
             <FormControl>
@@ -137,14 +160,32 @@ function CreateNew({}: Props) {
             </FormControl>
 
             <FormControl>
-              <label>เวลา</label>
-              <input name="time" type="time" placeholder="เวลา" />
+              <label>พระ</label>
+              <input
+                required
+                name="monk"
+                type="number"
+                max={10}
+                min={1}
+                placeholder="พระ"
+              />
             </FormControl>
+
+            <FormRow>
+              <FormControl>
+                <label>เวลา</label>
+                <input type="number" name="hours" style={{ width: "70px" }} />
+              </FormControl>
+              <FormControl>
+                <input type="number" name="minutes" />
+              </FormControl>
+            </FormRow>
 
             <FormRow>
               <FormControl>
                 <label>วันที่</label>
                 <input
+                  required
                   ref={dateRef}
                   type="number"
                   defaultValue={new Date(Date.now()).getDate()}
@@ -157,7 +198,17 @@ function CreateNew({}: Props) {
 
               <FormControl>
                 <label>เดือน</label>
-                <select ref={monthRef} name="month" id="" onChange={MonthEvent}>
+                <select
+                  required
+                  ref={monthRef}
+                  name="month"
+                  id=""
+                  onChange={MonthEvent}
+                  defaultValue={new Date(Date.now()).toLocaleDateString(
+                    "default",
+                    { month: "short" }
+                  )}
+                >
                   {populateMonth().map((m) => {
                     return (
                       <option key={m.value} value={m.value}>
@@ -170,7 +221,7 @@ function CreateNew({}: Props) {
 
               <FormControl>
                 <label>ปี</label>
-                <select name="years" id="">
+                <select name="year" id="" required>
                   <option value={new Date(Date.now()).getFullYear() + 543}>
                     {new Date(Date.now()).getFullYear() + 543}
                   </option>
@@ -183,23 +234,42 @@ function CreateNew({}: Props) {
 
             <FormControl>
               <label>สถานที่</label>
-              <select name="location" id="location">
+              <select
+                onChange={displayLocation}
+                name="location"
+                id="location"
+                required
+              >
                 <option value="วิหาร">วิหาร</option>
                 <option value="ศาลา">ศาลา</option>
                 <option value="ข้างนอก">ข้างนอก</option>
               </select>
             </FormControl>
 
-            <FormControl>
-              <label>พระ</label>
-              <input
-                name="monk"
-                type="number"
-                max={10}
-                min={1}
-                placeholder="พระ"
-              />
-            </FormControl>
+            <FormLocation ref={locationRef}>
+              <FormRow>
+                <FormControl>
+                  <label>บ้านเลขที่</label>
+                  <input type="text" />
+                </FormControl>
+                <FormControl>
+                  <label>หมู่</label>
+                  <input type="text" />
+                </FormControl>
+                <FormControl>
+                  <label>เเขวง/ตำบล</label>
+                  <input type="text" />
+                </FormControl>
+                <FormControl>
+                  <label>เขต/อำเภอ</label>
+                  <input type="text" />
+                </FormControl>
+                <FormControl>
+                  <label>จังหวัด</label>
+                  <input type="text" />
+                </FormControl>
+              </FormRow>
+            </FormLocation>
 
             <FormControl>
               <label>หมายเหตุ</label>

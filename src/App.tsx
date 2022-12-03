@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import axios, { AxiosResponse } from "axios";
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Navbar from "./components/navbar/Navbar";
 import Admin from "./pages/admin/Admin";
 import CreateNew from "./pages/admin/createNew/CreateNew";
+import Footer from "./components/navbar/footer/Footer";
 
-export const API = `http://185.78.167.199:3000`
+export const API = `http://localhost:3000`;
 
 function App() {
   const [count, setCount] = useState();
@@ -18,8 +19,7 @@ function App() {
 
   console.log(count);
   return (
-    <div className="App">
-
+    <div className="App" style={{ position: "relative", minHeight: "100vh" }}>
       <Navbar />
       <Routes>
         <Route path="/">
@@ -27,9 +27,13 @@ function App() {
         </Route>
         <Route path="/admin/">
           <Route path="" element={<Admin />} />
-          <Route path="new" element={<CreateNew /> } />
+          <Route path="new" element={<CreateNew />} />
         </Route>
       </Routes>
+
+      <div style={{ position: "absolute", bottom: "10px" }}>
+        <Footer />
+      </div>
     </div>
   );
 }

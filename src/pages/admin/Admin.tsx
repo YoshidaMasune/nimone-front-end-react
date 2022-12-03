@@ -1,11 +1,19 @@
-import React from 'react'
+import React from "react";
+import Login from "../login/Login";
+import { Container } from "./createNew/create.styled";
 
-type Props = {}
+type Props = {};
 
 function Admin({}: Props) {
   return (
-    <div>Admin</div>
-  )
+    <div>
+      <Container>
+        <div style={{ maxWidth: "max-content", margin: "0 auto" }}>
+          <Login />
+        </div>
+      </Container>
+    </div>
+  );
 }
 
-export default Admin
+export default Admin;
