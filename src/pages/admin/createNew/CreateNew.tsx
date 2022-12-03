@@ -60,7 +60,6 @@ function CreateNew({}: Props) {
   const dateRef: any = useRef();
   const monthRef: any = useRef();
   const locationRef: any = useRef();
-  const [locationToggle, setLocationToggle] = useState(false);
 
   const MonthEvent = () => {
     let monthsec = monthRef.current;

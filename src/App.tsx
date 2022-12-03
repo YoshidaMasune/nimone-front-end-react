@@ -13,6 +13,7 @@ export const API = `http://localhost:3000`;
 function App() {
   const [count, setCount] = useState();
   const getUrl = `${API}/api/nimones-all-data`;
+  
   useEffect(() => {
     axios.get(getUrl + ``).then((res) => setCount(res.data));
   }, []);
